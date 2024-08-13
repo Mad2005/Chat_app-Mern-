@@ -12,14 +12,7 @@ const app=express();
 
 dotenv.config();
 
-app.use(cors(
-  {
-    origin: ["https://chat-app-mern-frontend-jet.vercel.app"],
-    methods: ["POST","GET"],
-    allowedHeaders: ["Content-Type", "Authorization"], 
-    credentials: true
-  }
-));
+app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
@@ -46,8 +39,6 @@ const server = app.listen(port, () =>
 const io = new socket(server, {
   cors: {
     origin: "https://chat-app-mern-frontend-jet.vercel.app",
-    methods: ["POST","GET"],
-    allowedHeaders: ["Content-Type", "Authorization"], 
     credentials: true,
   },
 });
