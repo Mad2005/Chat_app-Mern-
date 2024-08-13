@@ -14,7 +14,7 @@ dotenv.config();
 
 app.use(cors(
   {
-    origin: ["https://chat-app-mern-frontend-jet.vercel.app/"],
+    origin: ["https://chat-app-mern-frontend-jet.vercel.app"],
     methods: ["POST","GET"],
     credentials: true
   }
