@@ -16,6 +16,7 @@ app.use(cors(
   {
     origin: ["https://chat-app-mern-frontend-jet.vercel.app"],
     methods: ["POST","GET"],
+    allowedHeaders: ["Content-Type", "Authorization"], 
     credentials: true
   }
 ));
