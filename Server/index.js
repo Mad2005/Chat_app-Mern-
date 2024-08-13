@@ -41,9 +41,22 @@ mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_ap
 app.get("/ping", (_req, res) => {
   return res.json({ msg: "Ping Successful" });
 });
+app.use("/api/auth", (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://chat-app-mern-frontend-jet.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+}, authRoutes);
 
-app.use("/api/auth", authRoutes);
-app.use("/api/messages", messageRoutes);
+app.use("/api/messages", (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://chat-app-mern-frontend-jet.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+}, messageRoutes);
+
+// app.use("/api/auth", authRoutes);
+// app.use("/api/messages", messageRoutes);
 
 // Start server
 const server = app.listen(port, () =>
