@@ -22,7 +22,14 @@ app.use(cors(
 ));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.options('*', cors());
+app.options('/api/auth/login', cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://chat-app-mern-frontend-jet.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
+
 
 
 
