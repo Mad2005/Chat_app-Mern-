@@ -12,7 +12,13 @@ const app=express();
 
 dotenv.config();
 
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://chat-app-mern-gilt.vercel.app/"],
+    methods: ["POST","GET"],
+    credentials: true
+  }
+));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
