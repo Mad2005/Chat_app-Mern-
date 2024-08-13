@@ -7,7 +7,6 @@ import { allUsersRoute, host } from "../utils/APIRoutes";
 import ChatContainer from "../components/ChatContainer";
 import Contacts from "../components/Contacts";
 import Welcome from "../components/Welcome";
-import Error from "../components/Error";
 
 export default function Chat() {
   const navigate = useNavigate();
@@ -70,9 +69,8 @@ export default function Chat() {
         <Contacts contacts={contacts} changeChat={handleChatChange} />
         {currentChat === undefined ? (
           <Welcome />
-        ) : (<Error fallback={<p>Something went wrong</p>}>
+        ) : (
           <ChatContainer currentChat={currentChat} socket={socket} />
-          </Error>
         )}
       </div>
     </Container>
