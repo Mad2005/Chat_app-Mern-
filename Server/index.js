@@ -22,6 +22,8 @@ app.use(cors(
 ));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.options('*', cors());
+
 
 
 mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0",
