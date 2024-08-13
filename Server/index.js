@@ -12,12 +12,12 @@ const app=express();
 
 dotenv.config();
 
-app.use(cors(
+app.use(cors({
   origin: "https://chat-app-mern-frontend-jet.vercel.app", // Frontend URL
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
-));
+}));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
