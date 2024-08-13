@@ -22,16 +22,6 @@ app.use(cors(
 ));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.options('/api/auth/login', cors());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://chat-app-mern-frontend-jet.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
-
-
-
 
 mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0",
   {useNewUrlParser: true, useUnifiedTopology:true}
@@ -55,7 +45,9 @@ const server = app.listen(port, () =>
 );
 const io = new socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://chat-app-mern-frontend-jet.vercel.app",
+    methods: ["POST","GET"],
+    allowedHeaders: ["Content-Type", "Authorization"], 
     credentials: true,
   },
 });
