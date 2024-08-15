@@ -14,7 +14,7 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: "https://chat-app-mern-frontend-jet.vercel.app",
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
