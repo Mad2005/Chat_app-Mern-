@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0",, {
+mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
