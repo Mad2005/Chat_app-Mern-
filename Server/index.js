@@ -12,6 +12,11 @@ dotenv.config();
 const port = 5000;
 const app = express();
 
+const req = new XMLHttpRequest();
+req.addEventListener("load", reqListener);
+req.open("GET", "https://chat-app-mern-frontend-jet.vercel.app");
+req.send();
+
 // CORS configuration
 app.use(cors({
   origin: "https://chat-app-mern-frontend-jet.vercel.app",
@@ -22,6 +27,13 @@ app.use(cors({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+router.get("/", (req, res) => {
+res.setHeader("Access-Control-Allow-Origin", "*")
+res.setHeader("Access-Control-Allow-Credentials", "true");
+res.setHeader("Access-Control-Max-Age", "1800");
+res.setHeader("Access-Control-Allow-Headers", "content-type");
+res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" ); 
+ });
 
 // MongoDB connection
 mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0", {
