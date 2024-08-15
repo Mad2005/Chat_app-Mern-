@@ -6,46 +6,27 @@ import messageRoutes from './routes/messages.js';
 import dotenv from 'dotenv';
 import { Server as socket } from 'socket.io';
 import bodyParser from 'body-parser';
+const port = 5000;
+const app=express();
+// Load environment variables
 
 dotenv.config();
 
-const port = 5000;
-const app = express();
-
-const req = new XMLHttpRequest();
-req.addEventListener("load", reqListener);
-req.open("GET", "https://chat-app-mern-frontend-jet.vercel.app");
-req.send();
-
-// CORS configuration
-app.use(cors({
-  origin: "https://chat-app-mern-frontend-jet.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-router.get("/", (req, res) => {
-res.setHeader("Access-Control-Allow-Origin", "*")
-res.setHeader("Access-Control-Allow-Credentials", "true");
-res.setHeader("Access-Control-Max-Age", "1800");
-res.setHeader("Access-Control-Allow-Headers", "content-type");
-res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" ); 
- });
 
-// MongoDB connection
-mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
-  console.log("Connected to MongoDB");
-}).catch(err => {
-  console.log(err.message);
-});
 
-// Routes
+mongoose.connect("mongodb+srv://madhu:madhu@cluster0.eea6dwq.mongodb.net/chat_app?retryWrites=true&w=majority&appName=Cluster0",
+  {useNewUrlParser: true, useUnifiedTopology:true}
+  ).then(()=>{
+      console.log("connected to mongoDB");
+  })
+  .catch((err)=>{
+      console.log(err.message);
+  });
+  
+
 app.get("/ping", (_req, res) => {
   return res.json({ msg: "Ping Successful" });
 });
@@ -53,30 +34,28 @@ app.get("/ping", (_req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-// Start server
-const server = app.listen(port, () => {
-  console.log(`Server started on port ${port}`);
-});
-
-// Socket.io configuration
+const server = app.listen(port, () =>
+  console.log(`Server started on ${port}`)
+);
 const io = new socket(server, {
   cors: {
-    origin: "https://chat-app-mern-frontend-jet.vercel.app",
-    credentials: true
-  }
+    origin: "https://chat-app-mern-frontend-jet.vercel.app/login",
+    credentials: true,
+  },
 });
 
-global.onlineUsers = new Map();
+global.Users = new Map();
 io.on("connection", (socket) => {
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
-    global.onlineUsers.set(userId, socket.id);
+    onlineUsers.set(userId, socket.id);
   });
 
   socket.on("send-msg", (data) => {
-    const sendUserSocket = global.onlineUsers.get(data.to);
+    const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
     }
   });
 });
+
