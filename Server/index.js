@@ -39,7 +39,7 @@ const server = app.listen(port, () =>
 );
 const io = new socket(server, {
   cors: {
-    origin: "https://chat-app-mern-frontend-jet.vercel.app/login",
+    origin: "https://chat-app-mern-frontend-one.vercel.app",
     credentials: true,
   },
 });
